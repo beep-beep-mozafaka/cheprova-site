@@ -1,4 +1,7 @@
+// Базовый путь к API
 const API_BASE = "/api";
+
+// Токен админа
 let token = localStorage.getItem("admin_token") || null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -7,37 +10,50 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAdminButton();
 });
 
+// --- Загрузка новостей ---
 async function loadNews() {
-  const res = await fetch(API_BASE + "/news");
-  const news = await res.json();
-  const container = document.getElementById("news-list");
+  const container = document.getElementById("news-list") || document.getElementById("latest-posts");
   if (!container) return;
 
-  container.innerHTML = news.map(n => `
-    <article class="post">
-      <h3>${escapeHtml(n.title)}</h3>
-      <small>${new Date(n.date).toLocaleDateString("ru-RU")}</small>
-      <p>${escapeHtml(n.text)}</p>
-      ${token ? `<button onclick="deleteNews(${n.id})">Удалить</button>` : ""}
-    </article>
-  `).join("");
+  try {
+    const res = await fetch(`${API_BASE}/news`);
+    const news = await res.json();
+
+    container.innerHTML = news.map(n => `
+      <article class="post">
+        <h3>${escapeHtml(n.title)}</h3>
+        <small>${new Date(n.date).toLocaleDateString("ru-RU")}</small>
+        <p>${escapeHtml(n.text)}</p>
+        ${token ? `<button onclick="deleteNews(${n.id})">Удалить</button>` : ""}
+      </article>
+    `).join("");
+  } catch (err) {
+    console.error("Ошибка загрузки новостей:", err);
+  }
 }
 
+// --- Загрузка материалов ---
 async function loadMaterials() {
-  const res = await fetch(API_BASE + "/materials");
-  const mats = await res.json();
   const container = document.getElementById("materials-list");
   if (!container) return;
 
-  container.innerHTML = mats.map(m => `
-    <div class="material-item">
-      <b>${escapeHtml(m.title)}</b>
-      <a href="/uploads/${m.filename}" target="_blank">Скачать</a>
-      ${token ? `<button onclick="deleteMaterial(${m.id})">Удалить</button>` : ""}
-    </div>
-  `).join("");
+  try {
+    const res = await fetch(`${API_BASE}/materials`);
+    const mats = await res.json();
+
+    container.innerHTML = mats.map(m => `
+      <div class="material-item">
+        <b>${escapeHtml(m.title)}</b>
+        <a href="/uploads/${m.filename}" target="_blank">Скачать</a>
+        ${token ? `<button onclick="deleteMaterial(${m.id})">Удалить</button>` : ""}
+      </div>
+    `).join("");
+  } catch (err) {
+    console.error("Ошибка загрузки материалов:", err);
+  }
 }
 
+// --- Кнопка админа ---
 function setupAdminButton() {
   const btn = document.createElement("button");
   btn.textContent = "Админ";
@@ -46,6 +62,7 @@ function setupAdminButton() {
   document.body.appendChild(btn);
 }
 
+// --- Вход/выход админа ---
 async function adminLogin() {
   if (token) {
     if (confirm("Выйти из админ-режима?")) {
@@ -59,25 +76,31 @@ async function adminLogin() {
 
   const password = prompt("Введите пароль администратора:");
   if (!password) return;
-  const res = await fetch(API_BASE + "/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password })
-  });
-  const data = await res.json();
 
-  if (data.success) {
-    token = data.token;
-    localStorage.setItem("admin_token", token);
-    alert("Вы вошли как администратор");
-    loadNews();
-    loadMaterials();
-    showAdminPanel();
-  } else {
-    alert("Неверный пароль");
+  try {
+    const res = await fetch(`${API_BASE}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      token = data.token;
+      localStorage.setItem("admin_token", token);
+      alert("Вы вошли как администратор");
+      loadNews();
+      loadMaterials();
+      showAdminPanel();
+    } else {
+      alert("Неверный пароль");
+    }
+  } catch (err) {
+    console.error("Ошибка при логине:", err);
   }
 }
 
+// --- Админ-панель ---
 function showAdminPanel() {
   const panel = document.createElement("div");
   panel.className = "admin-panel";
@@ -101,27 +124,34 @@ function closeAdminPanel() {
   document.querySelector(".admin-panel")?.remove();
 }
 
+// --- Добавление новостей ---
 async function addNews() {
   const title = document.getElementById("news-title").value.trim();
   const text = document.getElementById("news-text").value.trim();
   if (!title || !text) return alert("Введите заголовок и текст");
-  const res = await fetch(API_BASE + "/news", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({ title, text })
-  });
-  const data = await res.json();
-  if (data.success) {
-    alert("Новость добавлена");
-    loadNews();
-  } else {
-    alert("Ошибка при добавлении");
+
+  try {
+    const res = await fetch(`${API_BASE}/news`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({ title, text })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("Новость добавлена");
+      loadNews();
+    } else {
+      alert("Ошибка при добавлении");
+    }
+  } catch (err) {
+    console.error("Ошибка при добавлении новости:", err);
   }
 }
 
+// --- Добавление материалов ---
 async function addMaterial() {
   const title = document.getElementById("mat-title").value.trim();
   const file = document.getElementById("mat-file").files[0];
@@ -131,23 +161,28 @@ async function addMaterial() {
   formData.append("title", title);
   formData.append("file", file);
 
-  const res = await fetch(API_BASE + "/materials", {
-    method: "POST",
-    headers: { "Authorization": "Bearer " + token },
-    body: formData
-  });
-  const data = await res.json();
-  if (data.success) {
-    alert("Материал загружен");
-    loadMaterials();
-  } else {
-    alert("Ошибка при загрузке");
+  try {
+    const res = await fetch(`${API_BASE}/materials`, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + token },
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert("Материал загружен");
+      loadMaterials();
+    } else {
+      alert("Ошибка при загрузке");
+    }
+  } catch (err) {
+    console.error("Ошибка при загрузке материала:", err);
   }
 }
 
+// --- Удаление ---
 async function deleteNews(id) {
   if (!confirm("Удалить новость?")) return;
-  await fetch(API_BASE + "/news/" + id, {
+  await fetch(`${API_BASE}/news/${id}`, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
@@ -156,15 +191,16 @@ async function deleteNews(id) {
 
 async function deleteMaterial(id) {
   if (!confirm("Удалить материал?")) return;
-  await fetch(API_BASE + "/materials/" + id, {
+  await fetch(`${API_BASE}/materials/${id}`, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
   loadMaterials();
 }
 
+// --- Экранирование HTML ---
 function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-  ));
+  return s.replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
+  );
 }
