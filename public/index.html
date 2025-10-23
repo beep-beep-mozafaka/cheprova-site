@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Чепрова Марина Николаевна — учитель начальных классов</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Чепрова Марина Николаевна — Учитель начальных классов</title>
+
+  <!-- Подключение стилей и скриптов -->
+  <link rel="stylesheet" href="/style.css" />
   <script src="/scripts.js" defer></script>
 </head>
+
 <body>
-  <div id="site-header"></div>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">Чепрова Марина Николаевна</h1>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/index.html" class="active">Главная</a></li>
+          <li><a href="/about.html">Обо мне</a></li>
+          <li><a href="/blog.html">Новости</a></li>
+          <li><a href="/materials.html">Методические материалы</a></li>
+          <li><a href="/contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main class="container">
-    <section class="hero">
-      <div class="hero-text">
-        <h1>Здравствуйте! Я рада приветствовать вас на своём сайте.</h1>
-        <p class="lead">
-          Меня зовут <strong>Чепрова Марина Николаевна</strong>, я — учитель начальных классов
-          в <em>МБОУ лицей № 6 г. Данкова</em>. Здесь я делюсь методиками, публикую задания и новости
-          школьной жизни.
-        </p>
-
-        <p class="cta-row">
-          <a class="btn" href="about.html">Обо мне</a>
-          <a class="btn outline" href="materials.html">Методические материалы</a>
-        </p>
-      </div>
-
-      <div class="hero-card">
-        <img src="images/1.jpg" alt="Чепрова Марина Николаевна" class="photo">
-      </div>
+    <section class="welcome">
+      <h2>Добро пожаловать на сайт учителя</h2>
+      <p>
+        Этот сайт создан для учащихся, родителей и коллег, чтобы делиться новостями,
+        методическими материалами и полезной информацией.
+      </p>
     </section>
 
-    <section class="preview-grid">
-      <article class="card small">
-        <h3>Новости</h3>
-        <div id="latest-posts" class="card-list">
-          <!-- Posts injected by scripts.js -->
-        </div>
-        <p><a href="blog.html">Все новости →</a></p>
-      </article>
-
-      <article class="card small">
-        <h3>Для учеников</h3>
-        <p>Домашние задания, игры и полезные ссылки для родителей.</p>
-        <p><a href="students.html">Перейти →</a></p>
-      </article>
-
-      <article class="card small">
-        <h3>Методические материалы</h3>
-        <p>Разработки уроков, презентации, методички.</p>
-        <p><a href="materials.html">Перейти →</a></p>
-      </article>
+    <section class="news-section">
+      <h2>Последние новости</h2>
+      <div id="news-container" class="news-list"></div>
     </section>
   </main>
 
-  <div id="site-footer"></div>
-
-  <!-- admin modal and templates inserted by scripts.js -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 МБОУ Лицей №6 г. Данкова. Все права защищены.</p>
+    </div>
+  </footer>
 </body>
 </html>
