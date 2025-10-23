@@ -5,15 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Чепрова Марина Николаевна — Учитель начальных классов</title>
 
-  <!-- Подключение стилей и скриптов -->
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css">
   <script src="/scripts.js" defer></script>
 </head>
 
 <body>
   <header class="site-header">
-    <div class="container">
-      <h1 class="logo">Чепрова Марина Николаевна</h1>
+    <div class="container header-flex">
+      <div class="logo-block">
+        <img src="/images/1.jpg" alt="Фото учителя" class="teacher-photo">
+        <h1 class="logo-text">Чепрова Марина Николаевна</h1>
+        <p class="sub">учитель начальных классов МБОУ Лицей №6 г. Данкова</p>
+      </div>
+
       <nav class="main-nav">
         <ul>
           <li><a href="/index.html" class="active">Главная</a></li>
@@ -30,14 +34,16 @@
     <section class="welcome">
       <h2>Добро пожаловать на сайт учителя</h2>
       <p>
-        Этот сайт создан для учащихся, родителей и коллег, чтобы делиться новостями,
-        методическими материалами и полезной информацией.
+        Здесь вы можете узнать новости класса и лицея, ознакомиться с методическими материалами,
+        а также найти полезные ссылки для родителей и учеников.
       </p>
     </section>
 
     <section class="news-section">
       <h2>Последние новости</h2>
-      <div id="news-container" class="news-list"></div>
+      <div id="news-container" class="news-list">
+        <!-- Новости подгружаются автоматически -->
+      </div>
     </section>
   </main>
 
