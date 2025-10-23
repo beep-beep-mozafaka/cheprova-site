@@ -4,32 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Обо мне — Чепрова Марина Николаевна</title>
-  <!-- Пути к CSS и JS остаются относительными, т.к. HTML лежит в public/ -->
   <link rel="stylesheet" href="/style.css">
   <script src="/scripts.js" defer></script>
 </head>
+
 <body>
-  <div id="site-header"></div>
+  <header class="site-header">
+    <div class="container header-flex">
+      <div class="logo-block">
+        <img src="/images/1.jpg" alt="Фото учителя" class="teacher-photo">
+        <h1 class="logo-text">Чепрова Марина Николаевна</h1>
+        <p class="sub">учитель начальных классов МБОУ Лицей №6 г. Данкова</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/index.html">Главная</a></li>
+          <li><a href="/about.html" class="active">Обо мне</a></li>
+          <li><a href="/blog.html">Новости</a></li>
+          <li><a href="/materials.html">Методические материалы</a></li>
+          <li><a href="/contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main class="container narrow">
     <article class="card">
-      <h2>Чепрова Марина Николаевна</h2>
-      <p class="muted">Учитель начальных классов, МБОУ лицей № 6 г. Данкова</p>
+      <h2>Обо мне</h2>
+      <p class="muted">Учитель начальных классов, МБОУ Лицей №6 г. Данкова</p>
 
-      <h3>Обо мне</h3>
       <p>
-        Приветствую родителей, коллег и учеников! Я работаю в начальной школе, люблю развивать
-        у детей любознательность и уверенность в себе. На этом сайте — мои методические
-        разработки, примеры уроков и фото с занятий.
+        Приветствую родителей, коллег и учеников! Я работаю в начальной школе и верю,
+        что каждый ребёнок способен на успех, если ему создать атмосферу поддержки и интереса.
+        На этом сайте я делюсь своими методическими материалами, идеями для занятий и событиями из школьной жизни.
       </p>
 
       <h3>Профессиональные интересы</h3>
       <p>
-        Развитие навыков устной и письменной речи у младших школьников, игровая методика, проектная деятельность.
+        Развитие речи и творческих способностей младших школьников, игровые технологии в обучении,
+        проектная деятельность, формирование интереса к чтению.
       </p>
     </article>
   </main>
 
-  <div id="site-footer"></div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 МБОУ Лицей №6 г. Данкова. Все права защищены.</p>
+    </div>
+  </footer>
 </body>
 </html>
