@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // --- Настройки ---
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // пароль зададим на Render
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // пароль задаётся на Render
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey"; // секрет для токенов
 
 // --- Пути ---
@@ -33,8 +33,10 @@ if (!fs.existsSync(MATERIALS_FILE)) fs.writeFileSync(MATERIALS_FILE, "[]");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Раздаём статические файлы (HTML, CSS, JS, картинки)
 app.use("/uploads", express.static(UPLOADS_DIR));
-app.use("/", express.static(PUBLIC_DIR));
+app.use(express.static(PUBLIC_DIR)); // <-- ЭТА СТРОКА ОЧЕНЬ ВАЖНА!
 
 // --- Функции для чтения/записи JSON ---
 const readJSON = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
@@ -124,5 +126,10 @@ app.delete("/api/materials/:id", authMiddleware, (req, res) => {
   res.json({ success: true });
 });
 
+// --- ВАЖНО: отдаём index.html при заходе на / ---
+app.get("*", (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
+});
+
 // --- Запуск сервера ---
-app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
