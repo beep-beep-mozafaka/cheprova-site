@@ -1,23 +1,28 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
-const multer = require("multer");
-const jwt = require("jsonwebtoken");
+// server.js
+import express from "express";
+import fs from "fs";
+import path from "path";
+import cors from "cors";
+import multer from "multer";
+import jwt from "jsonwebtoken";
+import { fileURLToPath } from "url";
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// --- ES Modules: __dirname ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // --- Настройки ---
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // пароль задаётся на Render
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey"; // секрет для токенов
+const app = express();
+const PORT = process.env.PORT || 3000;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "12345"; // пароль на Render
+const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
 // --- Пути ---
 const PUBLIC_DIR = path.join(__dirname, "public");
 const DATA_DIR = path.join(__dirname, "data");
 const UPLOADS_DIR = path.join(__dirname, "uploads");
 
-// --- Создаём нужные папки, если их нет ---
+// --- Создаём папки, если их нет ---
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
@@ -25,7 +30,6 @@ if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 const NEWS_FILE = path.join(DATA_DIR, "news.json");
 const MATERIALS_FILE = path.join(DATA_DIR, "materials.json");
 
-// если файлов нет — создаём пустые
 if (!fs.existsSync(NEWS_FILE)) fs.writeFileSync(NEWS_FILE, "[]");
 if (!fs.existsSync(MATERIALS_FILE)) fs.writeFileSync(MATERIALS_FILE, "[]");
 
@@ -34,11 +38,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Раздаём статические файлы (HTML, CSS, JS, картинки)
+// Статика
 app.use("/uploads", express.static(UPLOADS_DIR));
-app.use(express.static(PUBLIC_DIR)); // <-- ЭТА СТРОКА ОЧЕНЬ ВАЖНА!
+app.use(express.static(PUBLIC_DIR)); // HTML, CSS, JS, картинки
 
-// --- Функции для чтения/записи JSON ---
+// --- Чтение/запись JSON ---
 const readJSON = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 const writeJSON = (file, data) => fs.writeFileSync(file, JSON.stringify(data, null, 2));
 
@@ -56,7 +60,7 @@ function authMiddleware(req, res, next) {
   }
 }
 
-// --- Авторизация (вход) ---
+// --- Авторизация ---
 app.post("/api/login", (req, res) => {
   const { password } = req.body;
   if (password === ADMIN_PASSWORD) {
@@ -124,11 +128,6 @@ app.delete("/api/materials/:id", authMiddleware, (req, res) => {
   materials = materials.filter((m) => m.id !== id);
   writeJSON(MATERIALS_FILE, materials);
   res.json({ success: true });
-});
-
-// --- ВАЖНО: отдаём index.html при заходе на / ---
-app.get("*", (req, res) => {
-  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
 });
 
 // --- Запуск сервера ---
