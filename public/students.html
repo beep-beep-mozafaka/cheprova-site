@@ -3,33 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Для учеников — Чепрова М.Н.</title>
-  <!-- Пути к CSS и JS остаются относительными, т.к. HTML лежит в public/ -->
+  <title>Для учеников — Чепрова Марина Николаевна</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/scripts.js" defer></script>
 </head>
-<body>
-  <div id="site-header"></div>
 
-  <main class="container">
+<body>
+  <header class="site-header">
+    <div class="container header-flex">
+      <div class="logo-block">
+        <img src="/images/1.jpg" alt="Фото учителя" class="teacher-photo">
+        <h1 class="logo-text">Чепрова Марина Николаевна</h1>
+        <p class="sub">учитель начальных классов МБОУ Лицей №6 г. Данкова</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/index.html">Главная</a></li>
+          <li><a href="/about.html">Обо мне</a></li>
+          <li><a href="/blog.html">Новости</a></li>
+          <li><a href="/materials.html">Методические материалы</a></li>
+          <li><a href="/students.html" class="active">Для учеников</a></li>
+          <li><a href="/contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container narrow">
     <article class="card">
       <h2>Раздел для учеников</h2>
-      <p>Задания, игры, полезные материалы для дома и для родителей.</p>
+      <p>Здесь вы можете найти домашние задания, полезные ссылки и дополнительные материалы для занятий.</p>
 
-      <section>
+      <section class="homework-section">
         <h3>Домашнее задание</h3>
         <ul id="homework-list">
-          <!-- homework items loaded by scripts.js -->
+          <!-- Домашние задания подгружаются из scripts.js -->
         </ul>
       </section>
 
-      <section>
+      <section class="links-section">
         <h3>Полезные ссылки</h3>
+        <ul id="useful-links">
+          <!-- Ссылки подгружаются из scripts.js -->
+        </ul>
       </section>
+
+      <div id="admin-panel" class="admin-panel" style="display: none;">
+        <h3>Добавить задание или ссылку</h3>
+
+        <form id="add-homework-form">
+          <input type="text" id="hw-title" placeholder="Название задания" required>
+          <textarea id="hw-text" placeholder="Описание задания"></textarea>
+          <button type="submit">Добавить задание</button>
+        </form>
+
+        <form id="add-link-form">
+          <input type="text" id="link-title" placeholder="Название ссылки" required>
+          <input type="url" id="link-url" placeholder="https://example.com" required>
+          <button type="submit">Добавить ссылку</button>
+        </form>
+      </div>
     </article>
   </main>
 
-  <div id="site-footer"></div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 МБОУ Лицей №6 г. Данкова. Все права защищены.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
