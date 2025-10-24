@@ -3,30 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Контакты — Чепрова М.Н.</title>
-  <!-- Пути к CSS и JS остаются относительными, т.к. HTML лежит в public/ -->
+  <title>Контакты — Чепрова Марина Николаевна</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/scripts.js" defer></script>
 </head>
+
 <body>
-  <div id="site-header"></div>
+  <header class="site-header">
+    <div class="container header-flex">
+      <div class="logo-block">
+        <img src="/images/1.jpg" alt="Фото учителя" class="teacher-photo">
+        <h1 class="logo-text">Чепрова Марина Николаевна</h1>
+        <p class="sub">учитель начальных классов МБОУ Лицей №6 г. Данкова</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/index.html">Главная</a></li>
+          <li><a href="/about.html">Обо мне</a></li>
+          <li><a href="/blog.html">Новости</a></li>
+          <li><a href="/materials.html">Методические материалы</a></li>
+          <li><a href="/contacts.html" class="active">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <main class="container narrow">
     <article class="card">
       <h2>Контакты</h2>
+
       <p><strong>Чепрова Марина Николаевна</strong><br>
-      Учитель начальных классов — <em>МБОУ лицей № 6 г. Данкова</em></p>
+      Учитель начальных классов — <em>МБОУ Лицей №6 г. Данкова</em></p>
 
       <ul class="contact-list">
-        <li>Школа: МБОУ лицей № 6 г. Данкова</li>
-        <li>Email: <a href="mailto:example@example.com">example@example.com</a></li>
-        <li>Телефон: <em>+7 (920) 511-85-32</em></li>
+        <li><strong>Школа:</strong> МБОУ Лицей №6 г. Данкова</li>
+        <li><strong>Email:</strong> <a href="mailto:example@example.com">example@example.com</a></li>
+        <li><strong>Телефон:</strong> <em>+7 (920) 511-85-32</em></li>
       </ul>
 
+      <p>Вы можете связаться со мной по электронной почте или через администрацию школы.</p>
     </article>
   </main>
 
-  <div id="site-footer"></div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 МБОУ Лицей №6 г. Данкова. Все права защищены.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
