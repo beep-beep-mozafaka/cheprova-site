@@ -3,26 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Методические материалы — Чепрова М.Н.</title>
-  <!-- Пути к CSS и JS остаются относительными, т.к. HTML лежит в public/ -->
+  <title>Методические материалы — Чепрова Марина Николаевна</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/scripts.js" defer></script>
 </head>
-<body>
-  <div id="site-header"></div>
 
-  <main class="container">
-    <article class="card">
+<body>
+  <header class="site-header">
+    <div class="container header-flex">
+      <div class="logo-block">
+        <img src="/images/1.jpg" alt="Фото учителя" class="teacher-photo">
+        <h1 class="logo-text">Чепрова Марина Николаевна</h1>
+        <p class="sub">учитель начальных классов МБОУ Лицей №6 г. Данкова</p>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/index.html">Главная</a></li>
+          <li><a href="/about.html">Обо мне</a></li>
+          <li><a href="/blog.html">Новости</a></li>
+          <li><a href="/materials.html" class="active">Методические материалы</a></li>
+          <li><a href="/contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <section class="materials-section">
       <h2>Методические материалы</h2>
-      <p>Здесь вы найдёте разработки уроков, презентации и методички.</p>
+      <p>Здесь собраны полезные материалы, разработки уроков и презентации.</p>
 
       <div id="materials-list" class="materials-grid">
-        <!-- materials injected by scripts.js -->
+        <!-- Список материалов загружается из scripts.js -->
       </div>
-    </article>
+
+      <div id="admin-panel" class="admin-panel" style="display: none;">
+        <h3>Добавить материал</h3>
+        <form id="add-material-form" enctype="multipart/form-data">
+          <input type="text" id="material-title" name="title" placeholder="Название материала" required>
+          <input type="file" id="material-file" name="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip" required>
+          <button type="submit">Загрузить</button>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <div id="site-footer"></div>
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 МБОУ Лицей №6 г. Данкова. Все права защищены.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
