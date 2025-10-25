@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHomework();
   loadLinks();
   setupAdminButton();
+
+  // если админ уже вошёл ранее
+  if (token) {
+    document.querySelectorAll("#admin-panel").forEach(p => {
+      p.style.display = "block";
+    });
+  }
 });
 
 // ========== Новости ==========
@@ -129,6 +136,7 @@ async function loadLinks() {
 }
 
 // ========== Авторизация ==========
+// ========== Авторизация ==========
 function setupAdminButton() {
   const btn = document.createElement("button");
   btn.textContent = token ? "Выйти" : "Вход";
@@ -162,7 +170,16 @@ async function adminLogin() {
       token = data.token;
       localStorage.setItem("admin_token", token);
       alert("Вы вошли как администратор");
-      location.reload();
+
+      // показываем все панели администратора на странице
+      document.querySelectorAll("#admin-panel").forEach(p => {
+        p.style.display = "block";
+      });
+
+      loadNews();
+      loadMaterials();
+      loadHomework();
+      loadLinks();
     } else {
       alert("Неверный пароль");
     }
@@ -170,10 +187,10 @@ async function adminLogin() {
     console.error("Ошибка при логине:", err);
   }
 }
-
 // ========== Вспомогательное ==========
 function escapeHtml(s) {
   return s.replace(/[&<>"']/g, c =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
   );
 }
+
